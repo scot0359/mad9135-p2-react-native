@@ -8,7 +8,7 @@ import YelpListItem from '../components/YelpListItem'
 export default class Home extends Component {
 
     static navigationOptions = {
-        title: 'Movie',
+        title: 'Yelp',
     }
 
     state = {

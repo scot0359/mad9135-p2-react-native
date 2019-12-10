@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Home from './Screens/Home'
+import YelpDetails from './Screens/YelpDetails'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createAppContainer } from 'react-navigation'
 
@@ -9,6 +10,8 @@ const AppNavigator = createStackNavigator({
     screen: Home,
   
   },
+
+  YelpDetail: YelpDetails
 
 }, {
   initialRouteName: 'Home',

@@ -13,7 +13,7 @@ class YelpListItem extends Component {
                 </Body>
                 <Right>
                     <Button transparent onPress={
-                        () => navigate('MovieDetail', { movie: item })
+                        () => navigate('YelpDetail', { restaurant: item })
                     }>
                         <Icon name="arrow-forward"/>
                     </Button>
