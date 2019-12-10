@@ -14,9 +14,12 @@ export default class Home extends Component {
     }
 
     geoSuccess = (position) => {
-        this.setState({ ready: true,
-            where: {lat: position.coords.latitude,lng:position.coords.longitude } })
-        console.log("pos:",position)
+        this.setState({
+            ready: true,
+            where: { lat: position.coords.latitude, lng: position.coords.longitude }
+        })
+        console.log("pos:", position)
+ 
     }
 
     geoFailure = (err) => {
@@ -36,34 +39,17 @@ export default class Home extends Component {
                 'Authorization': 'Bearer YDjD-LAWi6jZf1ImD7yjwqLcrDfD1c9vwJNF7tXplA7hT5BzsBlbJiTg0Y3wcCr4Y-0f76ADuroc5-RBtHxEE2i4qIyla4FHmwq3T5-OkQn95hPhVOo6w7fVnf_uXXYx'
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            this.setState({ yelpList: JSON.stringify(data.businesses)})
-        })    
-        
-        // let url = `https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}`
-        // let h = new Headers();
-        // h.append('Authorization', 'Bearer YDjD-LAWi6jZf1ImD7yjwqLcrDfD1c9vwJNF7tXplA7hT5BzsBlbJiTg0Y3wcCr4Y-0f76ADuroc5-RBtHxEE2i4qIyla4FHmwq3T5-OkQn95hPhVOo6w7fVnf_uXXYx')
-
-        // let req = new Request(url, {
-        //     headers: h,
-        //     method: 'GET'
-        // })
-
-        // fetch(req)
-        // .then(response => response.json())
-        // .then(data => {
-        //     this.setState({yelpList: JSON.stringify(data)})
-        //     console.log('LIST', this.state.yelpList)
-        // })
-
-    
+            .then(response => response.json())
+            .then(data => {
+                this.setState({ yelpList: JSON.stringify(data.businesses) })
+            })
+            .then(  console.log("listy:", this.state.yelpList))
     }
 
 
     componentDidMount() {
         // this.getLocation()  
-      
+
         console.log("state:", this.state)
 
         let geoOptions = {
@@ -76,32 +62,31 @@ export default class Home extends Component {
         navigator.geolocation.getCurrentPosition
             (this.geoSuccess, this.geoFailure, geoOptions)
 
-            // this.loadRestaurants()
+        // this.loadRestaurants()
 
-            console.log("list:", this.state.yelpList)
+      
     }
 
     render() {
 
         return (
             <Container>
+                <Button onPress={this.loadRestaurants} style={styles.btn}><Text style={styles.btnTxt}>Find restaurants nearby...</Text></Button>
                 <View style={styles.container}>
                     {!this.state.ready && (
-                        <Text style={styles.big}>Using Geolocation in React Native.</Text>
+                        <Text>Using Geolocation in React Native.</Text>
                     )}
                     {this.state.error && (
-                        <Text style={styles.big}>{this.state.error}</Text>
+                        <Text >{this.state.error}</Text>
                     )}
                     {this.state.ready && (
-                        <Text style={styles.big}>{
-                            `Latitude: ${this.state.where.lat}
-                            Longitude: ${this.state.where.lng}`
-                        }</Text>
+                        <Text >{
+                            `Latitude: ${this.state.where.lat}  Longitude: ${this.state.where.lng}`
+                        }
+                        </Text>
+
                     )}
-
-                    <Button onPress={this.loadRestaurants}><Text>PRESSME</Text></Button>
-
-                    <Text>{`Restaurants: ${this.state.yelpList}`}</Text>
+    <Text>{`Restaurants: ${this.state.yelpList}`}</Text>
                 </View>
             </Container>
         );
@@ -117,5 +102,15 @@ const styles = StyleSheet.create({
     },
     big: {
         fontSize: 48
-    }
+    },
+    btn:{
+        width:400,
+        marginTop:50,
+        marginBottom:30,
+        justifyContent:'center'
+    },
+    btnTxt:{
+        color:'white',
+        fontSize: 20
+    },
 });
