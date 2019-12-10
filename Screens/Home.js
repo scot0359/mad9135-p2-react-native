@@ -9,8 +9,8 @@ export default class Home extends Component {
         isLoading: true
     }
 
-    getLocation = () => {
-        navigator.geoLocation.getCurrentPosition( (position) => {
+    getLocation () {
+        navigator.geolocation.getCurrentPosition( (position) => {
             this.setState ({ position })
             }
         )
@@ -22,6 +22,7 @@ export default class Home extends Component {
 
     componentDidMount(){
         this.getLocation()
+        console.log(this.state.position)
     }
     
     render() {
