@@ -20,6 +20,7 @@
     "react-native-screens": "2.0.0-alpha.12",
     "react-native-web": "^0.11.7",
     "react-navigation": "^4.0.10",
+    "react-navigation-stack": "^1.10.3",
     "yelp-fusion": "^3.0.0"
   },
   "devDependencies": {
