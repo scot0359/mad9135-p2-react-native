@@ -19,13 +19,7 @@ const AppNavigator = createStackNavigator({
 
 export default createAppContainer(AppNavigator)
 
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Home />
-//     </View>
-//   );
-// }
+
 
 const styles = StyleSheet.create({
   container: {
