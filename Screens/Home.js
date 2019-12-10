@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Container } from 'native-base';
 import { StyleSheet, Text, View } from 'react-native';
+import axios from 'axios';
 
 export default class Home extends Component {
 
@@ -12,13 +13,6 @@ export default class Home extends Component {
         error: null
     }
 
-    // getLocation() {
-    //     navigator.geolocation.getCurrentPosition((position) => {
-    //         this.setState({ position })
-    //     }
-    //     )
-    // }
-
     geoSuccess = (position) => {
         this.setState({ ready: true,
             where: {lat: position.coords.latitude,lng:position.coords.longitude } })
@@ -27,6 +21,23 @@ export default class Home extends Component {
 
     geoFailure = (err) => {
         this.setState({ error: err.message })
+    }
+
+    loadRestaurants = () => {
+        let lat = this.state.where.lat
+        let lng = this.state.where.lng
+
+        fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}`, {
+            headers: {
+                'Authorization': 'Bearer YDjD-LAWi6jZf1ImD7yjwqLcrDfD1c9vwJNF7tXplA7hT5BzsBlbJiTg0Y3wcCr4Y-0f76ADuroc5-RBtHxEE2i4qIyla4FHmwq3T5-OkQn95hPhVOo6w7fVnf_uXXYx'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            this.setState({ yelpList: data.businesses})
+        })      
+
+    
     }
 
 
@@ -44,6 +55,10 @@ export default class Home extends Component {
         this.setState({ ready: false });
         navigator.geolocation.getCurrentPosition
             (this.geoSuccess, this.geoFailure, geoOptions)
+
+            this.loadRestaurants()
+
+            console.log("list:", this.state.yelpList)
     }
 
     render() {
@@ -62,6 +77,8 @@ export default class Home extends Component {
                             Longitude: ${this.state.where.lng}`
                         }</Text>
                     )}
+
+                    <Text>{`Restaurants: ${this.state.yelpList}`}</Text>
                 </View>
             </Container>
         );
