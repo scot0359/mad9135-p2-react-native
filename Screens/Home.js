@@ -49,7 +49,15 @@ export default class Home extends Component {
             .then(data => {
                 this.setState({ yelpList: data.businesses })
             })
+            this.sortRestaurants()
     }
+
+    sortRestaurants() {
+        let sortedData = this.state.yelpList.sort(function(a,b){
+            return parseInt(a.distance)  - parseInt(b.distance);
+           })
+           this.setState({yelpList: sortedData})
+      }
 
 
     componentDidMount() {

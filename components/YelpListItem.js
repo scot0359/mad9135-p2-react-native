@@ -5,11 +5,15 @@ import { withNavigation } from 'react-navigation'
 class YelpListItem extends Component {
     render() {
         const { item, navigation: { navigate }} = this.props
+
+        let km = item.distance / 1000
+        let kmRounded = Math.round( km * 10) / 10
+
         return (
             <ListItem>
                 <Body>
                     <Text style={{fontSize: 20}}>{item.name}</Text>
-                    <Text style={{fontSize: 14, color: '#777'}}>{item.phone}</Text>
+                    <Text style={{fontSize: 14, color: '#777'}}>{kmRounded}km</Text>
                 </Body>
                 <Right>
                     <Button transparent onPress={
