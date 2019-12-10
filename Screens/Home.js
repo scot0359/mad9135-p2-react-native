@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
-import { Container, Button } from 'native-base';
+import { Container, Button, Content } from 'native-base';
 import { StyleSheet, Text, View } from 'react-native';
+import { FlatList } from 'react-native'
 import { AppLoading } from 'expo'
+import YelpListItem from '../components/YelpListItem'
 
 export default class Home extends Component {
 
     static navigationOptions = {
-        title: 'Movie',
+        title: 'Yelp',
     }
 
     state = {
@@ -45,9 +47,8 @@ export default class Home extends Component {
         })
             .then(response => response.json())
             .then(data => {
-                this.setState({ yelpList: JSON.stringify(data.businesses) })
+                this.setState({ yelpList: data.businesses })
             })
-            .then(  console.log("listy:", this.state.yelpList))
     }
 
 
@@ -75,23 +76,19 @@ export default class Home extends Component {
 
         return (
             <Container style={styles.container}>
+                <Content>
                 <Button onPress={this.loadRestaurants} style={styles.btn}><Text style={styles.btnTxt}>Find restaurants nearby...</Text></Button>
                 <View style={styles.container}>
-                    {!this.state.ready && (
-                        <Text>Using Geolocation in React Native.</Text>
-                    )}
                     {this.state.error && (
                         <Text >{this.state.error}</Text>
                     )}
-                    {this.state.ready && (
-                        <Text >{
-                            `Latitude: ${this.state.where.lat}  Longitude: ${this.state.where.lng}`
-                        }
-                        </Text>
-
-                    )}
-    <Text>{`Restaurants: ${this.state.yelpList}`}</Text>
                 </View>
+                <FlatList
+                    data={this.state.yelpList}
+                    keyExtractor={item => item.id}
+                    renderItem={({item}) => <YelpListItem item={item}/>}
+                 />
+                </Content>
             </Container>
         );
     }
