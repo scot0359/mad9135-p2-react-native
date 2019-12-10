@@ -5,6 +5,10 @@ import { AppLoading } from 'expo'
 
 export default class Home extends Component {
 
+    static navigationOptions = {
+        title: 'Movie',
+    }
+
     state = {
         where: { lat: null, lng: null },
         yelpList: [],
@@ -70,7 +74,7 @@ export default class Home extends Component {
     render() {
 
         return (
-            <Container>
+            <Container style={styles.container}>
                 <Button onPress={this.loadRestaurants} style={styles.btn}><Text style={styles.btnTxt}>Find restaurants nearby...</Text></Button>
                 <View style={styles.container}>
                     {!this.state.ready && (
@@ -105,7 +109,7 @@ const styles = StyleSheet.create({
     },
     btn:{
         width:400,
-        marginTop:50,
+        marginTop:10,
         marginBottom:30,
         justifyContent:'center'
     },
