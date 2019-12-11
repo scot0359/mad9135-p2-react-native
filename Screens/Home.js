@@ -35,10 +35,7 @@ export default class Home extends Component {
         let lat = this.state.where.lat
         let lng = this.state.where.lng
 
-        // https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}
-        // https://api.yelp.com/v3/businesses/search?latitude=37.785834&longitude=-122.406417
-
-        fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}`, {
+        fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}&sort_by=distance`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer YDjD-LAWi6jZf1ImD7yjwqLcrDfD1c9vwJNF7tXplA7hT5BzsBlbJiTg0Y3wcCr4Y-0f76ADuroc5-RBtHxEE2i4qIyla4FHmwq3T5-OkQn95hPhVOo6w7fVnf_uXXYx'
@@ -48,21 +45,12 @@ export default class Home extends Component {
             .then(data => {
                 this.setState({ yelpList: data.businesses })
                 this.setState({ isLoading: false })
-                this.sortRestaurants()
+                // this.sortRestaurants()
             })
             
     }
 
-    sortRestaurants() {
-        let sortedData = this.state.yelpList.sort(function(a,b){
-            return parseInt(a.distance)  - parseInt(b.distance);
-           })
-           this.setState({yelpList: sortedData})
-      }
-
-
     componentDidMount() {
-        // this.getLocation()  
 
         console.log("state:", this.state)
 
@@ -75,9 +63,6 @@ export default class Home extends Component {
         this.setState({ ready: false });
         navigator.geolocation.getCurrentPosition
             (this.geoSuccess, this.geoFailure, geoOptions)
-
-        // this.loadRestaurants()
-
       
     }
 
@@ -93,7 +78,6 @@ export default class Home extends Component {
                     )}
                 </View>
                 <FlatList
-                    loading={this.state.isLoading}
                     data={this.state.yelpList}
                     keyExtractor={item => item.id}
                     renderItem={({item}) => <YelpListItem item={item}/>}
