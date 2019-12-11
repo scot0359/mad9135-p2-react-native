@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, ListItem, Right, Body, Icon, Button } from 'native-base'
 import { withNavigation } from 'react-navigation'
+import { AppLoading } from 'expo'
 
 class YelpListItem extends Component {
     render() {
