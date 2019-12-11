@@ -44,9 +44,11 @@ export default class Home extends Component {
             .then(response => response.json())
             .then(data => {
                 this.setState({ yelpList: data.businesses })
-                this.setState({ isLoading: false })
                 // this.sortRestaurants()
             })
+            .catch((err) => {
+                console.log('ERROR:' + err)
+            }) 
             
     }
 
