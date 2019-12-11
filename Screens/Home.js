@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Container, Button, Content } from 'native-base';
 import { StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native'
-import { AppLoading } from 'expo'
 import YelpListItem from '../components/YelpListItem'
 
 export default class Home extends Component {
@@ -48,8 +47,10 @@ export default class Home extends Component {
             .then(response => response.json())
             .then(data => {
                 this.setState({ yelpList: data.businesses })
+                this.setState({ isLoading: false })
+                this.sortRestaurants()
             })
-            this.sortRestaurants()
+            
     }
 
     sortRestaurants() {
@@ -92,6 +93,7 @@ export default class Home extends Component {
                     )}
                 </View>
                 <FlatList
+                    loading={this.state.isLoading}
                     data={this.state.yelpList}
                     keyExtractor={item => item.id}
                     renderItem={({item}) => <YelpListItem item={item}/>}
