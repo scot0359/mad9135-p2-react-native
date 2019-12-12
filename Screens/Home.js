@@ -3,6 +3,7 @@ import { Container, Button, Content } from 'native-base';
 import { StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native'
 import YelpListItem from '../components/YelpListItem'
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class Home extends Component {
 
@@ -13,7 +14,7 @@ export default class Home extends Component {
     state = {
         where: { lat: null, lng: null },
         yelpList: [],
-        isLoading: true,
+        isLoading: false,
         ready: false,
         error: null
     }
@@ -34,7 +35,7 @@ export default class Home extends Component {
     loadRestaurants = () => {
         let lat = this.state.where.lat
         let lng = this.state.where.lng
-
+        this.setState({isLoading: true})
         fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}&sort_by=distance`, {
             method: 'GET',
             headers: {
@@ -43,7 +44,7 @@ export default class Home extends Component {
         })
             .then(response => response.json())
             .then(data => {
-                this.setState({ yelpList: data.businesses })
+                this.setState({ yelpList: data.businesses, isLoading: false})
                 // this.sortRestaurants()
             })
             .catch((err) => {
@@ -63,8 +64,9 @@ export default class Home extends Component {
 
         };
         this.setState({ ready: false });
+        
         navigator.geolocation.getCurrentPosition
-            (this.geoSuccess, this.geoFailure, geoOptions)
+            (this.geoSuccess, this.geoFailure, geoOptions,)
       
     }
 
@@ -79,11 +81,15 @@ export default class Home extends Component {
                         <Text >{this.state.error}</Text>
                     )}
                 </View>
-                <FlatList
+            
+                {this.state.isLoading ? <Spinner visible={true} textContent={'Loading...'} textStyle={styles.spinnerTextStyle}/> :  <FlatList
                     data={this.state.yelpList}
                     keyExtractor={item => item.id}
                     renderItem={({item}) => <YelpListItem item={item}/>}
-                 />
+                 />}
+               
+                
+                
                 </Content>
             </Container>
         );

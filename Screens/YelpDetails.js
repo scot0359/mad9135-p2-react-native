@@ -12,7 +12,6 @@ export class YelpDetails extends Component {
         }
     }
 
-
     render() {
         const restaurant = this.props.navigation.getParam('restaurant')
 
