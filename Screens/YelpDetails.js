@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Container, Content, Text, Image } from 'native-base'
+import { Container, Content, Text } from 'native-base'
+import { Image } from 'react-native'
 
 export class YelpDetails extends Component {
     static navigationOptions = ({navigation}) => {
@@ -20,7 +21,7 @@ export class YelpDetails extends Component {
                 <Content style={{padding: 24}}>
                     <Text>{restaurant.name}</Text>
                     <Text>{restaurant.phone}</Text>
-                    {/* <Image source={{ uri: `${restaurant.image_url}` }}/> */}
+                    <Image style= {{ height:50, width: 50 }} source={{ uri: restaurant.image_url }}/>
                 </Content>
             </Container>
         )
