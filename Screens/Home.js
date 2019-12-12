@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Button, Content } from 'native-base';
+import { Container, Button } from 'native-base';
 import { StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native'
 import YelpListItem from '../components/YelpListItem'

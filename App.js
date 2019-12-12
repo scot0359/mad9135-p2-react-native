@@ -8,7 +8,6 @@ import { createAppContainer } from 'react-navigation'
 const AppNavigator = createStackNavigator({
   Home: {
     screen: Home,
-  
   },
 
   YelpDetail: YelpDetails

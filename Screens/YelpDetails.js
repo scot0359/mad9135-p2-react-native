@@ -14,8 +14,6 @@ export class YelpDetails extends Component {
         }
     }
 
-    
-
     render() {
         const restaurant = this.props.navigation.getParam('restaurant')
         let km = restaurant.distance / 1000
