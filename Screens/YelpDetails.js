@@ -14,17 +14,11 @@ export class YelpDetails extends Component {
         }
     }
 
-    
-
     render() {
         const restaurant = this.props.navigation.getParam('restaurant')
-
-        // {if (restaurant.rating == 3) {
-        //     return (
-        //         <Image source={require('../assets/ratings/small_0.png')}/>
-        //     )
-        // }}
-
+        let km = restaurant.distance / 1000
+        let kmRounded = Math.round( km * 100) / 100
+   
         return (
             <Container>
                 <Content style={{padding: 24}}>
@@ -32,7 +26,7 @@ export class YelpDetails extends Component {
                     <Text style={ styles.nameText }>{restaurant.name}</Text>
                     <Text><Text style={styles.bold}>Phone:</Text> {restaurant.phone}</Text>
                     <Text><Text style={styles.bold}>Pricing: </Text>{restaurant.price}</Text>
-                    <Text><Text style={styles.bold}>Distance: </Text>{restaurant.distance}</Text>
+                    <Text><Text style={styles.bold}>Distance: </Text>{kmRounded + ' km'}</Text>
                     <View style={styles.rating}>
                     {restaurant.rating == 0 ? <Image source={require('../assets/ratings/regular_0.png')}/> : null }
                     {restaurant.rating == 1 ? <Image source={require('../assets/ratings/regular_1.png')}/> : null }

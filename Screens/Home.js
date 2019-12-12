@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Container, Button, Content } from 'native-base';
+import { Container, Button } from 'native-base';
 import { StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native'
 import YelpListItem from '../components/YelpListItem'
 import Spinner from 'react-native-loading-spinner-overlay';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default class Home extends Component {
 
@@ -26,7 +26,7 @@ export default class Home extends Component {
             where: { lat: position.coords.latitude, lng: position.coords.longitude }
         })
         console.log("pos:", position)
- 
+
     }
 
     geoFailure = (err) => {
@@ -36,7 +36,7 @@ export default class Home extends Component {
     loadRestaurants = () => {
         let lat = this.state.where.lat
         let lng = this.state.where.lng
-        this.setState({isLoading: true})
+        this.setState({ isLoading: true })
         fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}&sort_by=distance`, {
             method: 'GET',
             headers: {
@@ -45,18 +45,15 @@ export default class Home extends Component {
         })
             .then(response => response.json())
             .then(data => {
-                this.setState({ yelpList: data.businesses, isLoading: false})
+                this.setState({ yelpList: data.businesses, isLoading: false })
                 // this.sortRestaurants()
             })
             .catch((err) => {
                 console.log('ERROR:' + err)
-            }) 
-            
+            })
     }
 
     componentDidMount() {
-
-        console.log("state:", this.state)
 
         let geoOptions = {
             enableHighAccuracy: true,
@@ -65,33 +62,30 @@ export default class Home extends Component {
 
         };
         this.setState({ ready: false });
-        
+
         navigator.geolocation.getCurrentPosition
-            (this.geoSuccess, this.geoFailure, geoOptions,)
-      
+            (this.geoSuccess, this.geoFailure, geoOptions)
     }
 
     render() {
 
         return (
             <Container style={styles.container}>
-                <Content>
-                <Button onPress={this.loadRestaurants} style={styles.btn}><Text style={styles.btnTxt}>Find restaurants nearby...</Text></Button>
-                <View style={styles.container}>
-                    {this.state.error && (
-                        <Text >{this.state.error}</Text>
-                    )}
+                <View>
+                    <Button onPress={this.loadRestaurants} style={styles.btn}><Text style={styles.btnTxt}>Find restaurants nearby...</Text></Button>
+                    <View style={styles.container}>
+                        {this.state.error && (
+                            <Text >{this.state.error}</Text>
+                        )}
+                    </View>
+
+                    {this.state.isLoading ? <Spinner visible={true} textContent={'Loading...'} textStyle={styles.spinnerTextStyle} /> : 
+                    <FlatList
+                        data={this.state.yelpList}
+                        keyExtractor={item => item.id}
+                        renderItem={({ item }) => <YelpListItem item={item} />}
+                    />}
                 </View>
-            
-                {this.state.isLoading ? <Spinner visible={true} textContent={'Loading...'} textStyle={styles.spinnerTextStyle}/> :  <FlatList
-                    data={this.state.yelpList}
-                    keyExtractor={item => item.id}
-                    renderItem={({item}) => <YelpListItem item={item}/>}
-                 />}
-               
-                
-                
-                </Content>
             </Container>
         );
     }
@@ -105,17 +99,17 @@ const styles = StyleSheet.create({
     big: {
         fontSize: 48
     },
-    btn:{
+    btn: {
         width: wp('90%'),
-        marginTop:10,
-        marginBottom:10,
-        justifyContent:'center',
+        marginTop: 10,
+        marginBottom: 10,
+        justifyContent: 'center',
         backgroundColor: '#F8F9F6',
         borderRadius: 4,
         borderWidth: 0.5,
         borderColor: '#B5B6B2'
     },
-    btnTxt:{
+    btnTxt: {
         color: '#222222',
         fontSize: 20
     },
