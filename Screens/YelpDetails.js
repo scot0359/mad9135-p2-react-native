@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Container, Content, Text } from 'native-base'
-import { Image } from 'react-native'
+import { Container, Content, Text, View } from 'native-base'
+import { Image, StyleSheet } from 'react-native'
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export class YelpDetails extends Component {
     static navigationOptions = ({navigation}) => {
@@ -13,15 +14,37 @@ export class YelpDetails extends Component {
         }
     }
 
+    
+
     render() {
         const restaurant = this.props.navigation.getParam('restaurant')
+
+        // {if (restaurant.rating == 3) {
+        //     return (
+        //         <Image source={require('../assets/ratings/small_0.png')}/>
+        //     )
+        // }}
 
         return (
             <Container>
                 <Content style={{padding: 24}}>
-                    <Text>{restaurant.name}</Text>
-                    <Text>{restaurant.phone}</Text>
-                    <Image style= {{ height:50, width: 50 }} source={{ uri: restaurant.image_url }}/>
+                    <Image style={ styles.image } source={{ uri: restaurant.image_url }}/>
+                    <Text style={ styles.nameText }>{restaurant.name}</Text>
+                    <Text><Text style={styles.bold}>Phone:</Text> {restaurant.phone}</Text>
+                    <Text><Text style={styles.bold}>Pricing: </Text>{restaurant.price}</Text>
+                    <Text><Text style={styles.bold}>Distance: </Text>{restaurant.distance}</Text>
+                    <View style={styles.rating}>
+                    {restaurant.rating == 0 ? <Image source={require('../assets/ratings/regular_0.png')}/> : null }
+                    {restaurant.rating == 1 ? <Image source={require('../assets/ratings/regular_1.png')}/> : null }
+                    {restaurant.rating == 1.5 ? <Image source={require('../assets/ratings/regular_1_half.png')}/> : null }
+                    {restaurant.rating == 2 ? <Image source={require('../assets/ratings/regular_2.png')}/> : null }
+                    {restaurant.rating == 2.5 ? <Image source={require('../assets/ratings/regular_2_half.png')}/> : null }
+                    {restaurant.rating == 3 ? <Image source={require('../assets/ratings/regular_3.png')}/> : null }
+                    {restaurant.rating == 3.5 ? <Image source={require('../assets/ratings/regular_3_half.png')}/> : null }
+                    {restaurant.rating == 4 ? <Image source={require('../assets/ratings/regular_4.png')}/> : null }
+                    {restaurant.rating == 4.5 ? <Image source={require('../assets/ratings/regular_4_half.png')}/> : null }
+                    {restaurant.rating == 5 ? <Image source={require('../assets/ratings/regular_5.png')}/> : null }
+                    </View>
                 </Content>
             </Container>
         )
@@ -29,3 +52,24 @@ export class YelpDetails extends Component {
 }
 
 export default YelpDetails
+
+const styles = StyleSheet.create({
+    image: {
+        height: hp('20%'),
+        marginBottom: 10,
+    },
+    rating: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20
+    },
+    nameText: {
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 20
+    },
+    bold: {
+        fontWeight: 'bold'
+    }
+});
+
