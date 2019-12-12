@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native'
 import YelpListItem from '../components/YelpListItem'
 import Spinner from 'react-native-loading-spinner-overlay';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default class Home extends Component {
 
@@ -98,22 +99,24 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'center'
     },
     big: {
         fontSize: 48
     },
     btn:{
-        width:400,
+        width: wp('90%'),
         marginTop:10,
-        marginBottom:30,
-        justifyContent:'center'
+        marginBottom:10,
+        justifyContent:'center',
+        backgroundColor: '#F8F9F6',
+        borderRadius: 4,
+        borderWidth: 0.5,
+        borderColor: '#B5B6B2'
     },
     btnTxt:{
-        color:'white',
+        color: '#222222',
         fontSize: 20
     },
 });

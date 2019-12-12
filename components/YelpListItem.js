@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Text, ListItem, Right, Body, Icon, Button } from 'native-base'
+import { StyleSheet} from 'react-native';
 import { withNavigation } from 'react-navigation'
 import { AppLoading } from 'expo'
 
@@ -11,7 +12,7 @@ class YelpListItem extends Component {
         let kmRounded = Math.round( km * 10) / 10
 
         return (
-            <ListItem>
+            <ListItem style={{marginLeft: 0}}>
                 <Body>
                     <Text style={{fontSize: 20}}>{item.name}</Text>
                     <Text style={{fontSize: 14, color: '#777'}}>{kmRounded}km</Text>
@@ -20,7 +21,7 @@ class YelpListItem extends Component {
                     <Button transparent onPress={
                         () => navigate('YelpDetail', { restaurant: item })
                     }>
-                        <Icon name="arrow-forward"/>
+                        <Icon style={styles.arrowBtn} name="arrow-forward"/>
                     </Button>
                 </Right>
             </ListItem>
@@ -28,3 +29,9 @@ class YelpListItem extends Component {
     }
 }
 export default withNavigation(YelpListItem)
+
+const styles = StyleSheet.create({
+    arrowBtn: {
+        color: '#C41200',
+    }
+});
