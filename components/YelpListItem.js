@@ -9,7 +9,7 @@ class YelpListItem extends Component {
         const { item, navigation: { navigate }} = this.props
 
         let km = item.distance / 1000
-        let kmRounded = Math.round( km * 10) / 10
+        let kmRounded = Math.round( km * 100) / 100
 
         return (
             <ListItem style={{marginLeft: 0}}>
